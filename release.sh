@@ -4,4 +4,4 @@ git init . -b gh-pages
 git add -A
 git remote add origin git@github.com:we-art-o-nauts/Wiglitcher.git
 git ca "IR"
-git push origin gh-pages
+git push --force origin gh-pages
