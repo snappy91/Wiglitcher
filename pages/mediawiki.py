@@ -23,7 +23,7 @@ def get_random_images(count=1):
         'thumbnail_url': img['url'],
         'image_width': img['width'],
         'image_height': img['height'],
-        'description_text': img['descriptionurl'].replace('https://commons.wikimedia.org/wiki/File:', '').replace('_', ' '),
+        'description_text': img['descriptionurl'].split('File:')[-1].replace('_', ' '),
         'artist_name': img['user'],
         'attribution_url': img['descriptionshorturl'],
         'license_name': '?',

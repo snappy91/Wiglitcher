@@ -8,11 +8,14 @@ from .mediawiki import *
 class Metadata(ft.View):
     """Wikimedia data page"""
 
-    def __init__(self):
+    def __init__(self, client_storage):
         super().__init__()
         self.route = "/"
-        self.wiki_data = self.page.client_storage.get("wiki_data")
-        self.wiki_index = self.page.client_storage.get("wiki_index")
+        self.page = super().page
+        # Why this doesn't work from self.page ..? IDK
+        self.client_storage = client_storage
+        self.wiki_data = self.client_storage.get("wiki_data")
+        self.wiki_index = self.client_storage.get("wiki_index")
         self.controls = [ 
 
             ft.ListTile(
@@ -31,13 +34,16 @@ class Metadata(ft.View):
             print("Loading fresh data ...")
             self.wiki_data = get_random_images(10)
             #self.wiki_data = [ get_todays_image() ]
-            self.page.client_storage.set('wiki_data', self.wiki_data)
-            self.page.client_storage.set('wiki_index', 0)
+            self.client_storage.set('wiki_data', self.wiki_data)
+            self.client_storage.set('wiki_index', 0)
 
-        idx = self.page.client_storage.get('wiki_index')
-        self.page.client_storage.set('wiki_index', idx + 1)
-        if idx == len(self.wiki_data):
+        idx = self.client_storage.get('wiki_index')
+        self.client_storage.set('wiki_index', idx + 1)
+        if idx >= len(self.wiki_data):
             idx = 0
+        if len(self.wiki_data) == 0:
+            print("No images loaded!")
+            return
         return [
             ft.Image(
                 src=self.wiki_data[idx]['thumbnail_url'],
