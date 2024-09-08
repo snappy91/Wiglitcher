@@ -8,10 +8,9 @@ from .mediawiki import *
 class Metadata(ft.View):
     """Wikimedia data page"""
 
-    def __init__(self, page):
+    def __init__(self):
         super().__init__()
         self.route = "/"
-        self.page = page
         self.wiki_data = self.page.client_storage.get("wiki_data")
         self.wiki_index = self.page.client_storage.get("wiki_index")
         self.controls = [ 
